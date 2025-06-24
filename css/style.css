@@ -43,6 +43,7 @@ body {
     text-align: center;
     margin-bottom: 3rem;
     animation: fadeInDown 1s ease-out;
+    position: relative;
 }
 
 .title {
@@ -116,6 +117,47 @@ body {
     text-align: center;
     margin-top: 2rem;
     animation: fadeIn 1s ease-out 1s both;
+}
+
+/* Fullscreen button */
+.fullscreen-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(47, 47, 47, 0.8);
+    border: 2px solid var(--primary-orange);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--secondary-orange);
+    font-size: 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-glow);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.fullscreen-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 107, 53, 0.2);
+    box-shadow: 0 0 25px rgba(255, 107, 53, 0.6);
+}
+
+.fullscreen-btn:active {
+    transform: scale(0.95);
+}
+
+.fullscreen-icon {
+    pointer-events: none;
+    transition: transform 0.2s ease;
+}
+
+.fullscreen-btn:hover .fullscreen-icon {
+    transform: rotate(90deg);
 }
 
 /* Floating particles background */
@@ -316,6 +358,14 @@ body {
         font-size: 1.5rem;
     }
     
+    .fullscreen-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        top: -10px;
+        right: 10px;
+    }
+    
     /* Reduce animations on mobile for better performance */
     .particle {
         display: none;
@@ -358,6 +408,14 @@ body {
         font-size: clamp(1rem, 5vw, 1.5rem) !important;
         margin-top: 1rem;
         letter-spacing: 1px;
+    }
+    
+    .fullscreen-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        top: -15px;
+        right: 5px;
     }
 }
 

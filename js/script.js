@@ -9,6 +9,7 @@ const hoursElement = document.getElementById('hours');
 const minutesElement = document.getElementById('minutes');
 const secondsElement = document.getElementById('seconds');
 const particlesContainer = document.getElementById('particles');
+const fullscreenBtn = document.getElementById('fullscreenBtn');
 
 // Countdown function
 function updateCountdown() {
@@ -170,6 +171,13 @@ function init() {
     // Handle window resize
     window.addEventListener('resize', handleResize);
     
+    // Add fullscreen event listeners
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', updateFullscreenButton);
+    
+    // Initialize fullscreen button state
+    updateFullscreenButton();
+    
     // Add loading class removal for smoother initial animation
     setTimeout(() => {
         document.body.classList.add('loaded');
@@ -204,6 +212,33 @@ function safeUpdateCountdown() {
     }
 }
 
+// Fullscreen functionality
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        // Enter fullscreen
+        document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+    } else {
+        // Exit fullscreen
+        document.exitFullscreen().catch(err => {
+            console.log(`Error attempting to exit fullscreen: ${err.message}`);
+        });
+    }
+}
+
+// Update fullscreen button icon based on state
+function updateFullscreenButton() {
+    const icon = fullscreenBtn.querySelector('.fullscreen-icon');
+    if (document.fullscreenElement) {
+        icon.textContent = '⛶'; // Exit fullscreen icon
+        fullscreenBtn.title = 'Exit Fullscreen';
+    } else {
+        icon.textContent = '⛶'; // Enter fullscreen icon  
+        fullscreenBtn.title = 'Enter Fullscreen';
+    }
+}
+
 // Add accessibility features
 function addAccessibilityFeatures() {
     // Add aria-labels for screen readers
@@ -217,6 +252,9 @@ function addAccessibilityFeatures() {
     const countdown = document.getElementById('countdown');
     countdown.setAttribute('aria-live', 'polite');
     countdown.setAttribute('aria-atomic', 'true');
+    
+    // Add fullscreen button accessibility
+    fullscreenBtn.setAttribute('aria-label', 'Toggle fullscreen mode');
 }
 
 // Initialize when DOM is ready
