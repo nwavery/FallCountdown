@@ -180,20 +180,20 @@ body {
 
 .bat-1 {
     top: 15%;
-    right: 20%;
+    left: 0;
     animation: fly 8s infinite linear;
 }
 
 .bat-2 {
     top: 60%;
-    left: 5%;
+    left: 0;
     animation: fly 12s infinite linear;
     animation-delay: 4s;
 }
 
 .bat-3 {
     bottom: 20%;
-    left: 20%;
+    left: 0;
     animation: fly 10s infinite linear;
     animation-delay: 6s;
 }
