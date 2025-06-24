@@ -121,9 +121,9 @@ body {
 
 /* Fullscreen button */
 .fullscreen-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: fixed;
+    top: 20px;
+    right: 20px;
     background: rgba(47, 47, 47, 0.8);
     border: 2px solid var(--primary-orange);
     border-radius: 50%;
@@ -138,7 +138,7 @@ body {
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-glow);
     transition: all 0.3s ease;
-    z-index: 10;
+    z-index: 100;
 }
 
 .fullscreen-btn:hover {
@@ -408,8 +408,8 @@ body {
         width: 45px;
         height: 45px;
         font-size: 1.3rem;
-        top: -10px;
-        right: 10px;
+        top: 15px;
+        right: 15px;
     }
     
     /* Reduce animations on mobile for better performance */
@@ -460,8 +460,8 @@ body {
         width: 40px;
         height: 40px;
         font-size: 1.1rem;
-        top: -15px;
-        right: 5px;
+        top: 10px;
+        right: 10px;
     }
 }
 
