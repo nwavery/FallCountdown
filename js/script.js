@@ -229,12 +229,12 @@ function toggleFullscreen() {
 
 // Update fullscreen button icon based on state
 function updateFullscreenButton() {
-    const icon = fullscreenBtn.querySelector('.fullscreen-icon');
+    const iconExpand = fullscreenBtn.querySelector('.icon-expand');
     if (document.fullscreenElement) {
-        icon.textContent = '⛶'; // Exit fullscreen icon
+        iconExpand.style.transform = 'rotate(180deg)';
         fullscreenBtn.title = 'Exit Fullscreen';
     } else {
-        icon.textContent = '⛶'; // Enter fullscreen icon  
+        iconExpand.style.transform = 'rotate(0deg)';
         fullscreenBtn.title = 'Enter Fullscreen';
     }
 }

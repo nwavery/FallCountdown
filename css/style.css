@@ -154,10 +154,56 @@ body {
 .fullscreen-icon {
     pointer-events: none;
     transition: transform 0.2s ease;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-expand {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--secondary-orange);
+    border-radius: 3px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.icon-expand::before,
+.icon-expand::after {
+    content: '';
+    position: absolute;
+    background: var(--secondary-orange);
+}
+
+.icon-expand::before {
+    width: 6px;
+    height: 2px;
+    top: -4px;
+    right: -4px;
+    border-radius: 1px;
+}
+
+.icon-expand::after {
+    width: 2px;
+    height: 6px;
+    top: -4px;
+    right: -4px;
+    border-radius: 1px;
 }
 
 .fullscreen-btn:hover .fullscreen-icon {
-    transform: rotate(90deg);
+    transform: scale(1.1);
+}
+
+.fullscreen-btn:hover .icon-expand {
+    border-color: var(--golden-yellow);
+}
+
+.fullscreen-btn:hover .icon-expand::before,
+.fullscreen-btn:hover .icon-expand::after {
+    background: var(--golden-yellow);
 }
 
 /* Floating particles background */
