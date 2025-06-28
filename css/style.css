@@ -90,6 +90,7 @@ body {
     min-width: 250px;
     max-height: 60vh;
     overflow-y: auto;
+    overflow-x: hidden;
     margin-top: 8px;
     opacity: 0;
     visibility: hidden;
@@ -127,23 +128,28 @@ body {
 }
 
 .dropdown-item.active {
-    background: rgba(var(--primary-color), 0.2);
+    background: rgba(255, 255, 255, 0.1);
     color: var(--primary-color);
     font-weight: 600;
+    border-left: 3px solid var(--primary-color);
 }
 
 /* Custom scrollbar for dropdown */
 .dropdown-menu::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 
 .dropdown-menu::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: transparent;
 }
 
 .dropdown-menu::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
 }
 
 /* Header styles */

@@ -97,7 +97,7 @@ const HOLIDAYS = {
     independence: {
         name: 'Independence Day',
         emoji: '🎆',
-        subtitle: 'Until Freedom Rings',
+        subtitle: 'Until We Blow Stuff Up... For America',
         getDate: (year) => new Date(year, 6, 4), // July 4
         theme: {
             primaryColor: '#FFFFFF',
@@ -163,9 +163,9 @@ const HOLIDAYS = {
         subtitle: 'Until Summer\'s Peak',
         getDate: (year) => new Date(year, 5, 21), // Jun 21 (approximate)
         theme: {
-            primaryColor: '#FFD700',
+            primaryColor: '#FFFFFF',
             secondaryColor: '#FF8C00',
-            accentColor: '#00BFFF',
+            accentColor: '#FF4500',
             bgGradient: 'linear-gradient(135deg, #87CEEB 0%, #FFD700 50%, #FF8C00 100%)',
             font: 'serif'
         },
@@ -194,9 +194,9 @@ const HOLIDAYS = {
         subtitle: 'Until Winter\'s Depth',
         getDate: (year) => new Date(year, 11, 21), // Dec 21 (approximate)
         theme: {
-            primaryColor: '#4169E1',
+            primaryColor: '#FFFFFF',
             secondaryColor: '#87CEEB',
-            accentColor: '#FFFFFF',
+            accentColor: '#B0E0E6',
             bgGradient: 'linear-gradient(135deg, #000080 0%, #4169E1 50%, #87CEEB 100%)',
             font: 'serif'
         },
