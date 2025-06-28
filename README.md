@@ -22,6 +22,13 @@ A visually stunning, multi-themed countdown website featuring 13 different holid
 - **Keyboard Accessible**: Full keyboard navigation support
 - **Mobile Optimized**: Touch-friendly interface on all devices
 
+### 🎵 Audio System (Optional)
+- **Off by Default**: Music system starts disabled, user must enable
+- **Holiday Music**: Background music that changes with each theme
+- **Smart Loading**: Audio only loads when user enables music
+- **Fade Transitions**: Smooth crossfading between holiday themes
+- **User Controls**: Easy toggle, mute, and volume management
+
 ## 🎊 Supported Holidays & Seasons
 
 ### Major Holidays (9)

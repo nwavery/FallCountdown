@@ -503,6 +503,22 @@ body {
     .particle {
         display: none;
     }
+
+    /* Mobile music button */
+    .music-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    .music-icon {
+        font-size: 1.1em;
+    }
+
+    .music-toggle {
+        font-size: 0.75em;
+    }
 }
 
 @media (max-width: 480px) {
@@ -559,6 +575,18 @@ body {
         padding: 8px 10px;
         font-size: 0.7rem;
     }
+
+    /* Small screen music button */
+    .music-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 10px;
+        font-size: 0.7rem;
+    }
+
+    .music-toggle {
+        display: none; /* Hide text on very small screens */
+    }
 }
 
 /* High contrast mode support */
@@ -603,6 +631,69 @@ body.light-theme .dedication {
 
 body.dark-theme .dedication {
     color: rgba(255, 255, 255, 0.7);
+}
+
+/* Music Control Button */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(47, 47, 47, 0.9);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 12px 16px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-speed) ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    user-select: none;
+    font-family: inherit;
+}
+
+.music-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.music-btn.disabled {
+    opacity: 0.6;
+    border-style: dashed;
+    background: rgba(47, 47, 47, 0.7) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.music-btn.muted {
+    background: rgba(139, 0, 0, 0.9);
+    border-color: #8B0000;
+    color: #8B0000;
+}
+
+.music-btn.muted:hover {
+    background: #8B0000;
+    color: white;
+}
+
+.music-icon {
+    font-size: 1.2em;
+    transition: transform var(--transition-speed) ease;
+}
+
+.music-btn:hover .music-icon {
+    transform: scale(1.1);
+}
+
+.music-toggle {
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
 }
 
 /* Loading state */

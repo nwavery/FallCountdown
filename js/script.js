@@ -16,6 +16,11 @@ const HOLIDAYS = {
             bgGradient: 'linear-gradient(135deg, #0F1C0F 0%, #1B2F1B 50%, #C41E3A 100%)',
             font: 'serif'
         },
+        audio: {
+            src: 'audio/themes/christmas.mp3',
+            volume: 0.3,
+            loop: true
+        },
         particles: ['❄️', '⭐', '🎁', '✨'],
         decorations: ['🎄', '🎅', '⛄', '🔔', '🎁']
     },
@@ -45,6 +50,11 @@ const HOLIDAYS = {
             accentColor: '#FFB6C1',
             bgGradient: 'linear-gradient(135deg, #2C1810 0%, #4A1A2C 50%, #8B0020 100%)',
             font: 'serif'
+        },
+        audio: {
+            src: 'audio/themes/valentines.mp3',
+            volume: 0.25,
+            loop: true
         },
         particles: ['💕', '💖', '🌹', '💝'],
         decorations: ['💕', '🌹', '💖', '💝', '💘']
@@ -122,6 +132,11 @@ const HOLIDAYS = {
             bgGradient: 'linear-gradient(135deg, #1a1a1a 0%, #2F2F2F 50%, #4B0082 100%)',
             font: 'Creepster, cursive'
         },
+        audio: {
+            src: 'audio/themes/halloween.mp3',
+            volume: 0.4,
+            loop: true
+        },
         particles: ['🎃', '🦇', '👻', '🍂'],
         decorations: ['🎃', '🦇', '👻', '🕷️', '🍂']
     },
@@ -169,6 +184,11 @@ const HOLIDAYS = {
             bgGradient: 'linear-gradient(135deg, #87CEEB 0%, #FFD700 50%, #FF8C00 100%)',
             font: 'serif'
         },
+        audio: {
+            src: 'audio/themes/summer.mp3',
+            volume: 0.3,
+            loop: true
+        },
         particles: ['☀️', '🌻', '🏖️', '🦋'],
         decorations: ['☀️', '🌻', '🏖️', '🦋', '🌺']
     },
@@ -204,6 +224,185 @@ const HOLIDAYS = {
         decorations: ['❄️', '⭐', '🌨️', '✨', '🔵']
     }
 };
+
+// Audio Management System
+class AudioManager {
+    constructor() {
+        this.currentAudio = null;
+        this.isEnabled = false; // Music is OFF by default - user must manually enable
+        this.volume = 0.3;
+        this.isMuted = false;
+        this.fadeInterval = null;
+        this.userHasInteracted = false;
+        
+        // Initialize user interaction detection
+        this.initUserInteraction();
+    }
+    
+    initUserInteraction() {
+        const enableAudio = () => {
+            this.userHasInteracted = true;
+            document.removeEventListener('click', enableAudio);
+            document.removeEventListener('keydown', enableAudio);
+            document.removeEventListener('touchstart', enableAudio);
+        };
+        
+        document.addEventListener('click', enableAudio);
+        document.addEventListener('keydown', enableAudio);
+        document.addEventListener('touchstart', enableAudio);
+    }
+    
+    async loadHolidayMusic(holiday) {
+        if (!holiday.audio || !this.isEnabled || !this.userHasInteracted) {
+            return;
+        }
+        
+        try {
+            // Fade out current music
+            if (this.currentAudio) {
+                await this.fadeOut(this.currentAudio);
+                this.currentAudio.pause();
+                this.currentAudio = null;
+            }
+            
+            // Load new music
+            const audio = new Audio(holiday.audio.src);
+            audio.volume = 0;
+            audio.loop = holiday.audio.loop || true;
+            audio.preload = 'auto';
+            
+            // Wait for audio to be ready
+            await new Promise((resolve, reject) => {
+                audio.addEventListener('canplaythrough', resolve);
+                audio.addEventListener('error', reject);
+                audio.load();
+            });
+            
+            this.currentAudio = audio;
+            
+            // Start playback with fade in
+            if (!this.isMuted) {
+                audio.play().then(() => {
+                    this.fadeIn(audio, holiday.audio.volume * this.volume);
+                }).catch(error => {
+                    console.log('Audio playback failed:', error);
+                });
+            }
+            
+        } catch (error) {
+            console.log('Could not load audio:', error);
+        }
+    }
+    
+    fadeIn(audio, targetVolume) {
+        if (this.fadeInterval) clearInterval(this.fadeInterval);
+        
+        let currentVolume = 0;
+        audio.volume = 0;
+        
+        this.fadeInterval = setInterval(() => {
+            currentVolume += 0.02;
+            if (currentVolume >= targetVolume) {
+                audio.volume = targetVolume;
+                clearInterval(this.fadeInterval);
+                this.fadeInterval = null;
+            } else {
+                audio.volume = currentVolume;
+            }
+        }, 50);
+    }
+    
+    fadeOut(audio) {
+        return new Promise(resolve => {
+            if (this.fadeInterval) clearInterval(this.fadeInterval);
+            
+            let currentVolume = audio.volume;
+            
+            this.fadeInterval = setInterval(() => {
+                currentVolume -= 0.02;
+                if (currentVolume <= 0) {
+                    audio.volume = 0;
+                    clearInterval(this.fadeInterval);
+                    this.fadeInterval = null;
+                    resolve();
+                } else {
+                    audio.volume = currentVolume;
+                }
+            }, 30);
+        });
+    }
+    
+    toggleMusic() {
+        this.isEnabled = !this.isEnabled;
+        
+        if (!this.isEnabled && this.currentAudio) {
+            this.fadeOut(this.currentAudio).then(() => {
+                this.currentAudio.pause();
+            });
+        } else if (this.isEnabled && currentHoliday && currentHoliday.audio) {
+            this.loadHolidayMusic(currentHoliday);
+        }
+        
+        this.updateMusicButton();
+        return this.isEnabled;
+    }
+    
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+        
+        if (this.currentAudio) {
+            if (this.isMuted) {
+                this.fadeOut(this.currentAudio);
+            } else {
+                this.currentAudio.play().then(() => {
+                    this.fadeIn(this.currentAudio, currentHoliday.audio.volume * this.volume);
+                }).catch(error => {
+                    console.log('Audio resume failed:', error);
+                });
+            }
+        }
+        
+        this.updateMusicButton();
+        return !this.isMuted;
+    }
+    
+    setVolume(newVolume) {
+        this.volume = Math.max(0, Math.min(1, newVolume));
+        
+        if (this.currentAudio && !this.isMuted) {
+            const targetVolume = currentHoliday.audio.volume * this.volume;
+            this.currentAudio.volume = targetVolume;
+        }
+    }
+    
+    updateMusicButton() {
+        const musicBtn = document.getElementById('musicBtn');
+        if (!musicBtn) return;
+        
+        const icon = musicBtn.querySelector('.music-icon');
+        const toggle = musicBtn.querySelector('.music-toggle');
+        
+        if (this.isEnabled && !this.isMuted) {
+            icon.textContent = '🎵';
+            toggle.textContent = 'Music On';
+            musicBtn.classList.remove('muted', 'disabled');
+        } else if (this.isEnabled && this.isMuted) {
+            icon.textContent = '🔇';
+            toggle.textContent = 'Muted';
+            musicBtn.classList.add('muted');
+            musicBtn.classList.remove('disabled');
+        } else {
+            icon.textContent = '🎵';
+            toggle.textContent = 'Music Off';
+            musicBtn.classList.add('disabled');
+            musicBtn.classList.remove('muted');
+        }
+    }
+}
+
+// Initialize audio manager (music off by default)
+const audioManager = new AudioManager();
+console.log('Audio system initialized - Music is OFF by default. Click 🎵 button to enable.');
 
 // Date calculation utilities for variable holidays
 function calculateEaster(year) {
@@ -337,6 +536,9 @@ function applyTheme(holiday) {
     
     // Update decorations
     updateDecorations(holiday);
+    
+    // Load holiday music
+    audioManager.loadHolidayMusic(holiday);
 }
 
 // Update decorative elements
@@ -455,6 +657,62 @@ function createParticles() {
             }
         }, 15000 + Math.random() * 5000);
     }
+}
+
+// Create music control button
+function createMusicButton() {
+    const musicBtn = document.createElement('div');
+    musicBtn.id = 'musicBtn';
+    musicBtn.className = 'music-btn disabled';
+    musicBtn.innerHTML = `
+        <div class="music-icon">🎵</div>
+        <span class="music-toggle">Music Off</span>
+    `;
+    
+    musicBtn.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(47, 47, 47, 0.9);
+        border: 2px solid var(--primary-color);
+        border-radius: var(--border-radius);
+        padding: 12px 16px;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transition: all var(--transition-speed) ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary-color);
+        font-size: 0.9rem;
+        font-weight: 600;
+        user-select: none;
+    `;
+    
+    document.body.appendChild(musicBtn);
+    
+    // Add click handler
+    musicBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        if (e.shiftKey || e.ctrlKey) {
+            // Shift/Ctrl + click for mute toggle
+            audioManager.toggleMute();
+        } else {
+            // Regular click for music on/off
+            audioManager.toggleMusic();
+        }
+    });
+    
+    // Right-click for volume control (future enhancement)
+    musicBtn.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        // Could add volume slider here in future
+    });
+    
+    return musicBtn;
 }
 
 // Create holiday dropdown navigation
@@ -602,6 +860,12 @@ function init() {
     
     // Create dropdown navigation
     createHolidayDropdown();
+    
+    // Create music controls
+    createMusicButton();
+    
+    // Ensure music button shows correct initial state
+    audioManager.updateMusicButton();
     
     // Start countdown
     updateCountdown();
