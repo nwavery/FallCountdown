@@ -3,10 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fall 2025 Countdown</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎃</text></svg>">
+    <title>Holiday Countdown</title>
+    <meta name="description" content="Multi-holiday countdown featuring 13 different celebrations including Christmas, Halloween, Valentine's Day, and seasonal countdowns with beautiful themes and animations.">
+    <meta name="keywords" content="countdown, holiday, Christmas, Halloween, Valentine's Day, Easter, New Year, seasons, celebration">
+    <meta name="author" content="Holiday Countdown">
+    
+    <!-- Dynamic favicon - will be updated by JavaScript -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎉</text></svg>">
+    
+    <!-- Preconnect to font sources for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Font imports - supporting different holiday themes -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    
+    <!-- Main stylesheet -->
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Open Graph meta tags for social sharing -->
+    <meta property="og:title" content="Multi-Holiday Countdown">
+    <meta property="og:description" content="Beautiful countdown timers for 13 different holidays and seasons with unique themes and animations.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/FF6B35/FFFFFF?text=Holiday+Countdown">
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#FF6B35">
+    <meta name="msapplication-TileColor" content="#FF6B35">
 </head>
 <body>
     <div class="container">
@@ -15,8 +38,8 @@
         
         <!-- Main content -->
         <header class="header">
-            <h1 class="title">Fall 2025</h1>
-            <button id="fullscreenBtn" class="fullscreen-btn" title="Toggle Fullscreen">
+            <h1 class="title" id="holidayTitle">Holiday Countdown</h1>
+            <button id="fullscreenBtn" class="fullscreen-btn" title="Toggle Fullscreen" aria-label="Toggle fullscreen mode">
                 <div class="fullscreen-icon">
                     <div class="icon-expand"></div>
                 </div>
@@ -24,39 +47,61 @@
         </header>
 
         <main class="countdown-container">
-            <div class="countdown" id="countdown">
-                <div class="time-unit">
+            <div class="countdown" id="countdown" role="timer" aria-live="polite" aria-atomic="true">
+                <div class="time-unit" aria-label="days remaining">
                     <span class="number" id="days">000</span>
                     <span class="label">Days</span>
                 </div>
-                <div class="time-unit">
+                <div class="time-unit" aria-label="hours remaining">
                     <span class="number" id="hours">00</span>
                     <span class="label">Hours</span>
                 </div>
-                <div class="time-unit">
+                <div class="time-unit" aria-label="minutes remaining">
                     <span class="number" id="minutes">00</span>
                     <span class="label">Minutes</span>
                 </div>
-                <div class="time-unit">
+                <div class="time-unit" aria-label="seconds remaining">
                     <span class="number" id="seconds">00</span>
                     <span class="label">Seconds</span>
                 </div>
             </div>
 
-            <p class="subtitle">Countdown to Autumn Magic</p>
-            <p class="dedication">(For Tara)</p>
+            <p class="subtitle" id="holidaySubtitle">Loading next holiday...</p>
+            <p class="dedication" id="holidayDedication" style="display: none;"></p>
         </main>
 
-        <!-- Decorative elements -->
-        <div class="decorations">
-            <div class="pumpkin pumpkin-1">🎃</div>
-            <div class="pumpkin pumpkin-2">🎃</div>
-            <div class="bat bat-1">🦇</div>
-            <div class="bat bat-2">🦇</div>
-            <div class="bat bat-3">🦇</div>
-        </div>
+        <!-- Decorative elements container - populated by JavaScript -->
+        <div class="decorations" id="decorations"></div>
     </div>
 
+    <!-- Holiday dropdown will be inserted here by JavaScript -->
+    
+    <!-- Main application script -->
     <script src="js/script.js"></script>
+    
+    <!-- Performance and analytics (optional) -->
+    <script>
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                const loadTime = performance.now();
+                console.log(`Page loaded in ${Math.round(loadTime)}ms`);
+            });
+        }
+        
+        // Service worker registration for PWA features (future enhancement)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Commented out for now - can be enabled when SW is implemented
+                // navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW registration failed'));
+            });
+        }
+        
+        // Basic error handling
+        window.addEventListener('error', (e) => {
+            console.error('JavaScript error:', e.error);
+            // Could send to analytics in production
+        });
+    </script>
 </body>
 </html> 

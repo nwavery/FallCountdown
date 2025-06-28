@@ -1,14 +1,20 @@
-/* CSS Variables for consistent theming */
+/* CSS Variables for dynamic theming - will be updated by JavaScript */
 :root {
-    --primary-orange: #FF6B35;
-    --secondary-orange: #F7931E;
+    /* Dynamic theme colors - set by JavaScript based on current holiday */
+    --primary-color: #FF6B35;
+    --secondary-color: #F7931E;
+    --accent-color: #FFD700;
+    --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2F2F2F 50%, #4B0082 100%);
+    
+    /* Static colors for UI elements */
     --dark-red: #8B0000;
-    --golden-yellow: #FFD700;
-    --deep-purple: #4B0082;
     --charcoal: #2F2F2F;
     --dark-bg: #1a1a1a;
     --text-light: #f5f5f5;
+    --text-dark: #333333;
     --shadow-glow: 0 0 20px rgba(255, 107, 53, 0.3);
+    --border-radius: 15px;
+    --transition-speed: 0.3s;
 }
 
 /* Reset and base styles */
@@ -20,11 +26,12 @@
 
 body {
     font-family: 'Crimson Text', serif;
-    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--charcoal) 50%, var(--deep-purple) 100%);
+    background: var(--bg-gradient);
     color: var(--text-light);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    transition: background var(--transition-speed) ease;
 }
 
 .container {
@@ -38,6 +45,107 @@ body {
     z-index: 1;
 }
 
+/* Holiday Dropdown Navigation */
+.holiday-dropdown {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.dropdown-toggle {
+    background: rgba(47, 47, 47, 0.9);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 12px 16px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-speed) ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+.dropdown-toggle:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(47, 47, 47, 0.95);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    min-width: 250px;
+    max-height: 60vh;
+    overflow-y: auto;
+    margin-top: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-speed) ease;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed) ease;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateX(4px);
+}
+
+.dropdown-item.active {
+    background: rgba(var(--primary-color), 0.2);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Custom scrollbar for dropdown */
+.dropdown-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
 /* Header styles */
 .header {
     text-align: center;
@@ -47,15 +155,14 @@ body {
 }
 
 .title {
-    font-family: 'Creepster', cursive;
+    font-family: 'Creepster', cursive; /* Default, will be overridden by JavaScript */
     font-size: clamp(2.5rem, 8vw, 5rem);
-    color: var(--primary-orange);
-    text-shadow: var(--shadow-glow);
+    color: var(--primary-color);
+    text-shadow: 0 0 20px currentColor, 2px 2px 4px rgba(0, 0, 0, 0.8);
     margin-bottom: 1rem;
     animation: glow 2s ease-in-out infinite alternate;
+    transition: all var(--transition-speed) ease;
 }
-
-
 
 /* Countdown container */
 .countdown-container {
@@ -78,31 +185,33 @@ body {
     flex-direction: column;
     align-items: center;
     background: rgba(47, 47, 47, 0.8);
-    border: 2px solid var(--primary-orange);
-    border-radius: 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
     padding: 1.5rem 1rem;
     backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-glow);
-    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-speed) ease;
 }
 
 .time-unit:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: var(--secondary-color);
 }
 
 .number {
     font-size: clamp(2rem, 6vw, 3.5rem);
     font-weight: 600;
-    color: var(--secondary-orange);
-    text-shadow: 0 2px 10px rgba(247, 147, 30, 0.5);
+    color: var(--secondary-color);
+    text-shadow: 0 2px 10px currentColor;
     margin-bottom: 0.5rem;
     font-family: 'Crimson Text', serif;
+    transition: all var(--transition-speed) ease;
 }
 
 .label {
     font-size: clamp(0.8rem, 2vw, 1rem);
-    color: var(--golden-yellow);
+    color: var(--accent-color);
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 600;
@@ -110,23 +219,24 @@ body {
 
 .subtitle {
     font-size: clamp(1rem, 3vw, 1.5rem);
-    color: var(--golden-yellow);
+    color: var(--accent-color);
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-align: center;
     margin-top: 2rem;
     animation: fadeIn 1s ease-out 1s both;
+    transition: all var(--transition-speed) ease;
 }
 
 .dedication {
     font-size: clamp(0.8rem, 2vw, 1rem);
-    color: #181818;
+    color: var(--text-dark);
     text-align: center;
     margin-top: 0.5rem;
     font-style: italic;
-    opacity: 0.9;
     animation: fadeIn 1s ease-out 1.5s both;
+    transition: all var(--transition-speed) ease;
 }
 
 /* Fullscreen button */
@@ -135,7 +245,7 @@ body {
     top: 20px;
     right: 20px;
     background: rgba(47, 47, 47, 0.8);
-    border: 2px solid var(--primary-orange);
+    border: 2px solid var(--primary-color);
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -143,18 +253,18 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--secondary-orange);
+    color: var(--secondary-color);
     font-size: 1.5rem;
     backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-glow);
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all var(--transition-speed) ease;
     z-index: 100;
 }
 
 .fullscreen-btn:hover {
     transform: scale(1.1);
-    background: rgba(255, 107, 53, 0.2);
-    box-shadow: 0 0 25px rgba(255, 107, 53, 0.6);
+    background: rgba(var(--primary-color), 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .fullscreen-btn:active {
@@ -174,7 +284,7 @@ body {
 .icon-expand {
     width: 16px;
     height: 16px;
-    border: 2px solid var(--secondary-orange);
+    border: 2px solid var(--secondary-color);
     border-radius: 3px;
     position: relative;
     transition: all 0.2s ease;
@@ -184,7 +294,7 @@ body {
 .icon-expand::after {
     content: '';
     position: absolute;
-    background: var(--secondary-orange);
+    background: var(--secondary-color);
 }
 
 .icon-expand::before {
@@ -204,19 +314,19 @@ body {
 }
 
 .fullscreen-btn:hover .fullscreen-icon {
-    transform: scale(1.1);
+    transform: rotate(90deg);
 }
 
 .fullscreen-btn:hover .icon-expand {
-    border-color: var(--golden-yellow);
+    border-color: white;
 }
 
 .fullscreen-btn:hover .icon-expand::before,
 .fullscreen-btn:hover .icon-expand::after {
-    background: var(--golden-yellow);
+    background: white;
 }
 
-/* Floating particles background */
+/* Particles system */
 .particles {
     position: fixed;
     top: 0;
@@ -229,25 +339,23 @@ body {
 
 .particle {
     position: absolute;
-    background: var(--golden-yellow);
-    border-radius: 50%;
-    animation: float 6s infinite ease-in-out;
+    pointer-events: none;
+    animation: float 12s linear infinite;
     opacity: 0.7;
+    font-size: 20px;
 }
 
 .particle:nth-child(even) {
-    background: var(--primary-orange);
-    animation-duration: 8s;
-    animation-delay: -2s;
+    animation-direction: reverse;
+    animation-duration: 15s;
 }
 
 .particle:nth-child(3n) {
-    background: var(--dark-red);
     animation-duration: 10s;
-    animation-delay: -4s;
+    opacity: 0.5;
 }
 
-/* Decorative elements */
+/* Decorations */
 .decorations {
     position: fixed;
     top: 0;
@@ -258,49 +366,20 @@ body {
     z-index: 0;
 }
 
-.pumpkin, .bat {
+.decoration {
     position: absolute;
-    font-size: 2rem;
-    animation: float 4s infinite ease-in-out;
-}
-
-.pumpkin-1 {
-    top: 20%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.pumpkin-2 {
-    bottom: 30%;
-    right: 15%;
-    animation-delay: 2s;
-}
-
-.bat-1 {
-    top: 15%;
-    left: 0;
-    animation: fly 8s infinite linear;
-}
-
-.bat-2 {
-    top: 60%;
-    left: 0;
-    animation: fly 12s infinite linear;
-    animation-delay: 4s;
-}
-
-.bat-3 {
-    bottom: 20%;
-    left: 0;
-    animation: fly 10s infinite linear;
-    animation-delay: 6s;
+    pointer-events: none;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    animation: float 3s ease-in-out infinite;
+    opacity: 0.6;
+    transition: all var(--transition-speed) ease;
 }
 
 /* Animations */
 @keyframes fadeInDown {
     from {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(-30px);
     }
     to {
         opacity: 1;
@@ -311,7 +390,7 @@ body {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -330,10 +409,10 @@ body {
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        text-shadow: 0 0 20px currentColor, 0 0 30px currentColor, 0 0 40px currentColor;
     }
     to {
-        text-shadow: 0 0 30px rgba(255, 107, 53, 0.8), 0 0 40px rgba(255, 107, 53, 0.3);
+        text-shadow: 0 0 30px currentColor, 0 0 40px currentColor, 0 0 50px currentColor;
     }
 }
 
@@ -342,94 +421,79 @@ body {
         transform: translateY(0px) rotate(0deg);
     }
     50% {
-        transform: translateY(-20px) rotate(5deg);
+        transform: translateY(-20px) rotate(180deg);
     }
 }
 
-@keyframes fly {
-    0% {
-        transform: translateX(calc(100vw + 100px)) translateY(0px);
-    }
-    25% {
-        transform: translateX(75vw) translateY(-20px);
-    }
-    50% {
-        transform: translateX(50vw) translateY(10px);
-    }
-    75% {
-        transform: translateX(25vw) translateY(-15px);
-    }
-    100% {
-        transform: translateX(-100px) translateY(5px);
-    }
-}
-
-/* Responsive design */
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 0.25rem;
-        min-height: 100vh;
-        justify-content: space-evenly;
+        padding: 1rem;
     }
-    
+
     .title {
-        font-size: clamp(3.5rem, 14vw, 5rem) !important;
-        margin-bottom: 1rem;
+        font-size: clamp(2rem, 10vw, 3.5rem);
     }
-    
+
     .countdown {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 0.3rem;
-        margin-bottom: 1rem;
-        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 300px;
     }
-    
+
     .time-unit {
-        padding: 1.5rem 0.1rem;
-        min-height: 140px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        padding: 1rem 0.5rem;
     }
-    
+
     .number {
-        font-size: clamp(2.2rem, 7vw, 3rem) !important;
-        line-height: 0.9;
-        margin-bottom: 0.4rem;
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
     }
-    
+
     .label {
-        font-size: clamp(0.8rem, 3vw, 1.2rem) !important;
-        line-height: 1;
+        font-size: clamp(0.7rem, 3vw, 0.9rem);
     }
-    
+
     .subtitle {
-        font-size: clamp(1.4rem, 5vw, 2rem) !important;
-        margin-top: 1rem;
+        font-size: clamp(0.9rem, 4vw, 1.2rem);
+        letter-spacing: 1px;
     }
-    
-    .dedication {
-        font-size: clamp(0.9rem, 3vw, 1.2rem) !important;
-        margin-top: 0.5rem;
-    }
-    
+
     .header {
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
-    
-    .pumpkin, .bat {
-        font-size: 1.8rem;
+
+    .decoration {
+        font-size: clamp(1rem, 6vw, 2rem);
     }
-    
+
     .fullscreen-btn {
         width: 45px;
         height: 45px;
-        font-size: 1.3rem;
         top: 15px;
         right: 15px;
     }
-    
-    /* Reduce animations on mobile for better performance */
+
+    .holiday-dropdown {
+        top: 15px;
+        left: 15px;
+    }
+
+    .dropdown-toggle {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    .dropdown-menu {
+        min-width: 200px;
+        max-height: 50vh;
+    }
+
+    .dropdown-item {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    /* Hide particles on mobile for performance */
     .particle {
         display: none;
     }
@@ -437,63 +501,74 @@ body {
 
 @media (max-width: 480px) {
     .container {
-        padding: 0.25rem;
+        padding: 0.5rem;
     }
-    
+
     .title {
-        font-size: clamp(2.5rem, 15vw, 3.5rem) !important;
-        margin-bottom: 1rem;
+        font-size: clamp(1.8rem, 12vw, 3rem);
     }
-    
+
     .countdown {
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 0.3rem;
-        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        max-width: 280px;
     }
-    
+
     .time-unit {
-        padding: 0.8rem 0.1rem;
-        min-height: 100px;
+        padding: 0.8rem 0.3rem;
     }
-    
+
     .number {
-        font-size: clamp(1.5rem, 7vw, 2rem) !important;
-        line-height: 0.9;
-        margin-bottom: 0.2rem;
+        font-size: clamp(1.2rem, 10vw, 2rem);
     }
-    
+
     .label {
-        font-size: clamp(0.6rem, 3vw, 0.9rem) !important;
-        line-height: 1;
+        font-size: clamp(0.6rem, 4vw, 0.8rem);
     }
-    
+
     .subtitle {
-        font-size: clamp(1rem, 5vw, 1.5rem) !important;
-        margin-top: 1rem;
-        letter-spacing: 1px;
+        font-size: clamp(0.8rem, 5vw, 1rem);
+        margin-top: 1.5rem;
     }
-    
+
     .dedication {
-        font-size: clamp(0.8rem, 4vw, 1rem) !important;
-        margin-top: 0.3rem;
+        font-size: clamp(0.7rem, 3vw, 0.9rem);
     }
-    
+
     .fullscreen-btn {
         width: 40px;
         height: 40px;
-        font-size: 1.1rem;
         top: 10px;
         right: 10px;
+    }
+
+    .holiday-dropdown {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 1rem;
+    }
+
+    .dropdown-toggle {
+        padding: 8px 10px;
+        font-size: 0.7rem;
     }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
     :root {
-        --primary-orange: #FFA500;
-        --secondary-orange: #FF8C00;
-        --golden-yellow: #FFFF00;
-        --text-light: #FFFFFF;
+        --shadow-glow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+    
+    .time-unit {
+        background: rgba(0, 0, 0, 0.9);
+        border-width: 3px;
+    }
+    
+    .dropdown-toggle, .dropdown-menu {
+        background: rgba(0, 0, 0, 0.9);
+        border-width: 3px;
     }
 }
 
@@ -504,4 +579,31 @@ body {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+    
+    .particle, .decoration {
+        animation: none;
+    }
+    
+    .title {
+        animation: none;
+        text-shadow: 0 0 20px currentColor;
+    }
+}
+
+/* Theme-specific adjustments */
+body.light-theme .dedication {
+    color: var(--text-dark);
+}
+
+body.dark-theme .dedication {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Loading state */
+body:not(.loaded) * {
+    animation-play-state: paused;
+}
+
+.loaded {
+    animation-play-state: running;
 } 
