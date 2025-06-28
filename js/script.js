@@ -49,6 +49,21 @@ const HOLIDAYS = {
         particles: ['💕', '💖', '🌹', '💝'],
         decorations: ['💕', '🌹', '💖', '💝', '💘']
     },
+    stpatricks: {
+        name: 'St. Patrick\'s Day',
+        emoji: '🍀',
+        subtitle: 'Until Irish Luck Arrives',
+        getDate: (year) => new Date(year, 2, 17), // Mar 17
+        theme: {
+            primaryColor: '#228B22',
+            secondaryColor: '#32CD32',
+            accentColor: '#FFD700',
+            bgGradient: 'linear-gradient(135deg, #0D2818 0%, #1B4332 50%, #228B22 100%)',
+            font: 'serif'
+        },
+        particles: ['🍀', '☘️', '🌈', '💚'],
+        decorations: ['🍀', '☘️', '🌈', '🎩', '💚']
+    },
     easter: {
         name: 'Easter',
         emoji: '🐰',
