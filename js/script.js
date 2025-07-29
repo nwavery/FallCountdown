@@ -187,6 +187,21 @@ const HOLIDAYS = {
         particles: ['☀️', '🌻', '🏖️', '🦋'],
         decorations: ['☀️', '🌻', '🏖️', '🦋', '🌺']
     },
+    psl: {
+        name: 'Pumpkin Spice Latte Returns',
+        emoji: '🎃',
+        subtitle: 'Until PSL Season Begins',
+        getDate: (year) => new Date(year, 7, 26), // Aug 26
+        theme: {
+            primaryColor: '#D2691E',
+            secondaryColor: '#CD853F',
+            accentColor: '#F4E4BC',
+            bgGradient: 'linear-gradient(135deg, #3C2415 0%, #8B4513 50%, #D2691E 100%)',
+            font: 'serif'
+        },
+        particles: ['🎃', '☕', '🍂', '✨'],
+        decorations: ['🎃', '☕', '🍂', '🥧', '🧡']
+    },
     fall: {
         name: 'Fall Equinox',
         emoji: '🍂',

@@ -1,6 +1,6 @@
 # 🎉 Multi-Holiday Countdown System
 
-A visually stunning, multi-themed countdown website featuring 13 different holidays and seasons. Each countdown has its own unique theme, animations, and decorative elements. The system automatically detects and displays the next upcoming holiday, with support for direct linking to specific countdowns.
+A visually stunning, multi-themed countdown website featuring 15 different holidays and seasons. Each countdown has its own unique theme, animations, and decorative elements. The system automatically detects and displays the next upcoming holiday, with support for direct linking to specific countdowns.
 
 ## ✨ Key Features
 
@@ -24,16 +24,18 @@ A visually stunning, multi-themed countdown website featuring 13 different holid
 
 ## 🎊 Supported Holidays & Seasons
 
-### Major Holidays (9)
+### Major Holidays (11)
 | Holiday | Emoji | URL Hash | Date | Theme Colors |
 |---------|-------|----------|------|-------------|
 | **Christmas** | 🎄 | `#christmas` | December 25 | Red, Green, Gold |
 | **New Year's Day** | 🎆 | `#newyear` | January 1 | Gold, Orange, Purple |
 | **Valentine's Day** | 💕 | `#valentines` | February 14 | Pink, Deep Rose |
+| **St. Patrick's Day** | 🍀 | `#stpatricks` | March 17 | Green, Gold |
 | **Easter** | 🐰 | `#easter` | *Variable* | Orange, Green, Purple |
 | **Mother's Day** | 🌸 | `#mothersday` | *2nd Sunday in May* | Pink, Green |
 | **Father's Day** | 👔 | `#fathersday` | *3rd Sunday in June* | Blue, Dark Gray, Gold |
 | **Independence Day** | 🇺🇸 | `#independence` | July 4 | Red, White, Blue |
+| **PSL Returns** | 🎃 | `#psl` | August 26 | Pumpkin, Brown, Cream |
 | **Halloween** | 🎃 | `#halloween` | October 31 | Orange, Purple, Gold |
 | **Thanksgiving** | 🦃 | `#thanksgiving` | *4th Thursday in Nov* | Brown, Orange |
 
@@ -190,7 +192,8 @@ decorations: ['🎅', '🎁', '⛄', '🔔', '🎄']
 |-----|---------|-------------|
 | `yoursite.com` | *Auto* | Next upcoming holiday |
 | `yoursite.com#christmas` | Christmas | Direct Christmas countdown |
-| `yoursite.com#valentines` | Valentine's Day | Direct Valentine's countdown |
+| `yoursite.com#stpatricks` | St. Patrick's Day | Irish luck theme |
+| `yoursite.com#psl` | PSL Returns | Pumpkin spice season begins |
 | `yoursite.com#halloween` | Halloween | Original Fall theme |
 | `yoursite.com#fall` | Fall Equinox | Original personalized countdown |
 
